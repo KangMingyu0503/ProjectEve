@@ -1,0 +1,190 @@
+/* ===== BASE ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Arial, sans-serif;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  background: #000;
+  color: #fff;
+}
+
+/* ===== NAVBAR ===== */
+/* default accent (F1) - JS toggles theme-f1 / theme-music on .NavBar */
+.NavBar {
+  --accent: #ff0000; /* default red */
+  background: #000;
+  border-bottom: 2px solid var(--accent);
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: border-color 250ms ease;
+}
+
+/* theme classes (toggled by JS) */
+.NavBar.theme-f1   { --accent: #ff0000; } /* red */
+.NavBar.theme-music{ --accent: #ff66cc; } /* pink */
+
+.NavBarLogo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 250ms ease;
+}
+
+.NavBarList {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  align-items: center;
+}
+
+.NavBarList a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 200ms ease;
+  padding: 6px 0;
+}
+
+/* Hover and active follow current theme */
+.NavBarList a:hover,
+.NavBarList a.active {
+  color: var(--accent);
+}
+
+/* Responsive Hamburger */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .NavBarList {
+    display: none;
+    flex-direction: column;
+    background: #000;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 12px;
+    border-radius: 6px;
+    gap: 12px;
+  }
+  .NavBarList.show { display: flex; }
+  .menu-toggle { display: block; }
+}
+
+/* ===== SECTIONS ===== */
+section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: start;
+  position: relative;
+  text-align: center;
+  padding: 40px;
+}
+
+/* Theme backgrounds */
+.F1Section {
+  background: linear-gradient(135deg, #111 0%, #000 50%, #900 100%);
+}
+.MusicSection {
+  background: linear-gradient(135deg, #111 0%, #000 50%, #d63384 100%);
+}
+
+/* ===== OVERLAY (CLICKABLE) ===== */
+.overlay {
+  display: inline-block;
+  background: rgba(0,0,0,0.5);
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+  max-width: 80%;
+}
+
+/* cinematic background via pseudo element behind text */
+.overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  filter: blur(10px);
+  transform: scale(1);
+  transition: opacity 1s ease, filter 1.2s ease, transform 1.2s ease;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+/* Use your provided image paths */
+.F1Section .overlay::before {
+  background-image: url("/Public/MainImage/HomeF1.png");
+}
+.MusicSection .overlay::before {
+  background-image: url("/Public/MainImage/HomeMusic.jpg");
+}
+
+/* Hover cinematic effect: fade-in + sharpen + slight zoom */
+.overlay:hover::before {
+  opacity: 1;
+  filter: blur(0px);
+  transform: scale(1.05); /* 100% -> 105% */
+}
+.overlay:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+
+/* ===== TEXT & FADE-UP ANIMATION ===== */
+/* initial state for fade-up elements */
+.fade-up {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 700ms cubic-bezier(.22,.9,.3,1), transform 700ms cubic-bezier(.22,.9,.3,1);
+}
+
+/* when section becomes "in-view" we reveal text */
+section.in-view .fade-up {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* text sizes */
+section h1 {
+  font-size: 3.6rem;
+  margin-bottom: 10px;
+}
+section p {
+  font-size: 1.25rem;
+  color: #ddd;
+}
+
+/* colors for section titles */
+.F1Section h1 { color: #ff2b2b; }       /* bright racing red */
+.MusicSection h1 { color: #ff8ecf; }    /* neon pink-ish */
+
+/* small responsive tweaks */
+@media (max-width: 720px) {
+  section h1 { font-size: 2.2rem; }
+  section p { font-size: 1rem; }
+  .overlay { padding: 28px; max-width: 92%; }
+}

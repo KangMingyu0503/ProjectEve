@@ -1,11 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProjectEve</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Eve</title>
+  <link rel="stylesheet" href="Home.css" type="text/css">
+  <script src="Home.js" defer></script>
 </head>
 <body>
-    
+  <!-- NAVBAR -->
+  <nav class="NavBar">
+    <a class="NavBarLogo" href="address here" id="logo">Project Eve</a>
+
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+
+    <ul class="NavBarList" id="NavBarList">
+      <li><a href="#f1">Formula 1</a></li>
+      <li><a href="#music">Music</a></li>
+      <li><a href="address here">MyPage</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <<!-- Formula 1 Section -->
+    <section class="F1Section" id="f1">
+        <a class="overlay" href="address_here_f1"> <!-- replace address_here_f1 with your F1 page URL -->
+            <h1 class="fade-up">Formula 1</h1>
+            <p class="fade-up">Speed • Engineering • Competition</p>
+        </a>
+    </section>
+
+<!-- Music Section -->
+    <section class="MusicSection" id="music">
+        <a class="overlay" href="address_here_music"> <!-- replace address_here_music with your Music page URL -->
+            <h1 class="fade-up">Music</h1>
+            <p class="fade-up">Creativity • Rhythm • Expression</p>
+        </a>
+    </section>
+  </main>
 </body>
 </html>
